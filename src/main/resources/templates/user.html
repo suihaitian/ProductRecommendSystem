@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <title>Title</title>
+    <style>
+        .product-item {
+            margin-top: 5px;
+            border: 1px solid #ffe9bf;
+        }
+        .product-item-img{
+            width: 100px;
+            height: auto;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<div class="clearfix" style="margin-top:15px;"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--热度榜-->
+        <div class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">热度榜</div>
+                <div class="panel-body">
+                    <div class="row product-item" th:each="pro: ${recommandList01}">
+                        <div class="col-lg-6">
+                            <img class="product-item-img" th:src="${pro.productImg}"/>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <text><strong>商品id:</strong></text>
+                                <text th:text="${pro.id}"></text>
+                                &nbsp;&nbsp;
+                                <text><strong>品牌:</strong></text>
+                                <text th:text="${pro.brand}"></text>
+                            </div>
+                            <div class="row product-action">
+                                <text th:text="${pro.productName}"></text>
+                                <br>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-danger" style="width: 48px;height: 30px;">浏览</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-warning" style="width: 48px;height: 30px;">收藏</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-info" style="width: 48px;height: 30px;">购买</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--协同过滤-->
+        <div class="col-lg-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">协同过滤推荐</div>
+                <div class="panel-body">
+                    <div class="row product-item" th:each="pro: ${recommandList02}">
+                        <div class="col-lg-6">
+                            <img class="product-item-img" th:src="${pro.productImg}"/>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <text><strong>商品id:</strong></text>
+                                <text th:text="${pro.id}"></text>
+                                &nbsp;&nbsp;
+                                <text><strong>品牌:</strong></text>
+                                <text th:text="${pro.brand}"></text>
+                            </div>
+                            <div class="row product-action">
+                                <text th:text="${pro.productName}"></text>
+                                <br>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-danger" style="width: 48px;height: 30px;">浏览</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-warning" style="width: 48px;height: 30px;">收藏</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-info" style="width: 48px;height: 30px;">购买</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--产品画像-->
+        <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">产品画像推荐</div>
+                <div class="panel-body">
+                    <div class="row product-item" th:each="pro: ${recommandList03}">
+                        <div class="col-lg-6">
+                            <img class="product-item-img" th:src="${pro.productImg}"/>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <text><strong>商品id:</strong></text>
+                                <text th:text="${pro.id}"></text>
+                                &nbsp;&nbsp;
+                                <text><strong>品牌:</strong></text>
+                                <text th:text="${pro.brand}"></text>
+                            </div>
+                            <div class="row product-action">
+                                <text th:text="${pro.productName}"></text>
+                                <br>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-danger" style="width: 48px;height: 30px;">浏览</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-warning" style="width: 48px;height: 30px;">收藏</button>
+                                </a>
+                                <a th:onclick="sendLog([[${userId}]],[[${pro.id}]],1)" href="">
+                                    <button type="button" class="btn btn-info" style="width: 48px;height: 30px;">购买</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--日志发送函数-->
+<script>
+    function sendLog(id, prod, action) {
+        var url = "/Log?id=" + id + "&prod=" + prod + "&action=" + action;
+        var request = new XMLHttpRequest();
+        request.open("POST", url);
+        request.send();
+    }
+</script>
+</body>
+</html>
